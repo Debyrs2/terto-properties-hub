@@ -12,7 +12,7 @@ Logo enviada usada no cabeçalho, rodapé e favicon, sem alterar cores. Paleta n
 
 - **Home** — hero com marca, grid responsivo de cards (capa, título, metragem, preço ou "Consulte o valor", badge Disponível/Vendido), filtros simples por status e tipo de negociação.
 - **Imóvel** — blocos condicionais: galeria (carrossel + lightbox, adaptando-se de 1 a 50 fotos), vídeos (upload ou YouTube, até 2), metragem, endereço, botão "Ver no mapa" (link externo, sem embed), lugares próximos, informações adicionais, preço, botão "Falar com o corretor". Blocos sem conteúdo não são renderizados.
-- **Contato** — dados oficiais e botão "Apenas tirar dúvidas".
+- **Contato** — dados oficiais e botão "Tirar dúvidas".
 - **Rodapé** — nome do corretor, CRECI 23228, Instagram, WhatsApp. Sem qualquer link para o admin.
 
 Responsividade fluida (grid com minmax, clamp() na tipografia), verificada em 360/768/1024/1440/1920.
@@ -23,7 +23,8 @@ Seletor PT-BR / EN / ES traduzindo toda a interface fixa (conteúdo cadastrado p
 
 ## WhatsApp
 
-Links wa.me em nova aba, sempre para o "número principal" configurado no painel (padrão 81 98849-0523).
+Links wa.me em nova aba, sempre para o "número principal" configurado no painel (padrão 81 98849-0523 e 81 98778-5590).
+
 - No imóvel: `Olá! Vi o imóvel "[Título]" no site e gostaria de saber mais informações.`
 - Botão geral: modal com lista de imóveis (seleção múltipla) ou "Apenas tirar dúvidas".
 - Múltiplos: `Olá! Vi os imóveis "[T1]" e "[T2]" ...`
