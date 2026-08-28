@@ -14,7 +14,122 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      properties: {
+        Row: {
+          address: string | null
+          area: string | null
+          created_at: string
+          deal_type: string | null
+          description: string | null
+          id: string
+          maps_url: string | null
+          nearby: string | null
+          price: number | null
+          status: string
+          title: string | null
+          updated_at: string
+        }
+        Insert: {
+          address?: string | null
+          area?: string | null
+          created_at?: string
+          deal_type?: string | null
+          description?: string | null
+          id?: string
+          maps_url?: string | null
+          nearby?: string | null
+          price?: number | null
+          status?: string
+          title?: string | null
+          updated_at?: string
+        }
+        Update: {
+          address?: string | null
+          area?: string | null
+          created_at?: string
+          deal_type?: string | null
+          description?: string | null
+          id?: string
+          maps_url?: string | null
+          nearby?: string | null
+          price?: number | null
+          status?: string
+          title?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      property_media: {
+        Row: {
+          created_at: string
+          id: string
+          kind: string
+          position: number
+          property_id: string
+          storage_path: string | null
+          url: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          kind?: string
+          position?: number
+          property_id: string
+          storage_path?: string | null
+          url: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          kind?: string
+          position?: number
+          property_id?: string
+          storage_path?: string | null
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "property_media_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "properties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      site_settings: {
+        Row: {
+          broker_name: string | null
+          creci: string | null
+          id: boolean
+          instagram_handle: string | null
+          instagram_url: string | null
+          updated_at: string
+          whatsapp_primary: string | null
+          whatsapp_secondary: string | null
+        }
+        Insert: {
+          broker_name?: string | null
+          creci?: string | null
+          id?: boolean
+          instagram_handle?: string | null
+          instagram_url?: string | null
+          updated_at?: string
+          whatsapp_primary?: string | null
+          whatsapp_secondary?: string | null
+        }
+        Update: {
+          broker_name?: string | null
+          creci?: string | null
+          id?: boolean
+          instagram_handle?: string | null
+          instagram_url?: string | null
+          updated_at?: string
+          whatsapp_primary?: string | null
+          whatsapp_secondary?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
