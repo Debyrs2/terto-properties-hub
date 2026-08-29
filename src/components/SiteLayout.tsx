@@ -1,6 +1,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import type { ReactNode } from "react";
 
+import { LeadCapture } from "@/components/LeadCapture";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { propertiesQuery, settingsQuery } from "@/lib/queries";
@@ -14,6 +15,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
       <SiteHeader properties={properties} settings={settings} />
       <main className="flex-1">{children}</main>
       <SiteFooter settings={settings} />
+      <LeadCapture />
     </div>
   );
 }
