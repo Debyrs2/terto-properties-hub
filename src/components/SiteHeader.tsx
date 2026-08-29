@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Moon, Sun, Languages } from "lucide-react";
+import { Languages } from "lucide-react";
 
 import { ContactDialog } from "@/components/ContactDialog";
 import { Logo } from "@/components/Logo";
@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useI18n, type Lang } from "@/lib/i18n";
 import type { PropertyWithMedia, SiteSettings } from "@/lib/property";
-import { useTheme } from "@/lib/theme";
 
 const langs: { code: Lang; label: string }[] = [
   { code: "pt", label: "Português (BR)" },
@@ -28,7 +27,6 @@ export function SiteHeader({
   settings: SiteSettings | null;
 }) {
   const { t, lang, setLang } = useI18n();
-  const { theme, toggle } = useTheme();
 
   return (
     <header className="bg-background/85 sticky top-0 z-40 border-b backdrop-blur">
@@ -69,10 +67,6 @@ export function SiteHeader({
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
-
-          <Button variant="ghost" size="icon" onClick={toggle} aria-label={t("theme.toggle")}>
-            {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-          </Button>
 
           <ContactDialog properties={properties} whatsapp={settings?.whatsapp_primary}>
             <Button size="sm" className="ml-1 hidden sm:inline-flex">
