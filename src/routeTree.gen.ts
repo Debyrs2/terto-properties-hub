@@ -16,6 +16,7 @@ import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as ImoveisRouteImport } from './routes/imoveis'
 import { Route as ImovelIdRouteImport } from './routes/imovel.$id'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
+import { Route as AuthenticatedAdminImovelIdRouteImport } from './routes/_authenticated/admin.imovel.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -51,6 +52,12 @@ const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   path: '/admin/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAdminImovelIdRoute =
+  AuthenticatedAdminImovelIdRouteImport.update({
+    id: '/admin/imovel/$id',
+    path: '/admin/imovel/$id',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -59,6 +66,7 @@ export interface FileRoutesByFullPath {
   '/imoveis': typeof ImoveisRoute
   '/imovel/$id': typeof ImovelIdRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
+  '/admin/imovel/$id': typeof AuthenticatedAdminImovelIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -67,6 +75,7 @@ export interface FileRoutesByTo {
   '/imoveis': typeof ImoveisRoute
   '/imovel/$id': typeof ImovelIdRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
+  '/admin/imovel/$id': typeof AuthenticatedAdminImovelIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -77,12 +86,27 @@ export interface FileRoutesById {
   '/imoveis': typeof ImoveisRoute
   '/imovel/$id': typeof ImovelIdRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
+  '/_authenticated/admin/imovel/$id': typeof AuthenticatedAdminImovelIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/contato' | '/imoveis' | '/imovel/$id' | '/admin/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/contato'
+    | '/imoveis'
+    | '/imovel/$id'
+    | '/admin/'
+    | '/admin/imovel/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/contato' | '/imoveis' | '/imovel/$id' | '/admin'
+  to:
+    | '/'
+    | '/auth'
+    | '/contato'
+    | '/imoveis'
+    | '/imovel/$id'
+    | '/admin'
+    | '/admin/imovel/$id'
   id:
     | '__root__'
     | '/'
@@ -92,6 +116,7 @@ export interface FileRouteTypes {
     | '/imoveis'
     | '/imovel/$id'
     | '/_authenticated/admin/'
+    | '/_authenticated/admin/imovel/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -154,15 +179,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/imovel/$id': {
+      id: '/_authenticated/admin/imovel/$id'
+      path: '/admin/imovel/$id'
+      fullPath: '/admin/imovel/$id'
+      preLoaderRoute: typeof AuthenticatedAdminImovelIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+  AuthenticatedAdminImovelIdRoute: typeof AuthenticatedAdminImovelIdRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+  AuthenticatedAdminImovelIdRoute: AuthenticatedAdminImovelIdRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
