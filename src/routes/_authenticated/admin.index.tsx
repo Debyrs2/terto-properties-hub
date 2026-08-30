@@ -112,6 +112,40 @@ function AdminHome() {
     navigate({ to: "/auth", replace: true });
   };
 
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [savingPassword, setSavingPassword] = useState(false);
+
+  const changePassword = async () => {
+    if (newPassword.length < 8) {
+      toast.error("A nova senha precisa ter pelo menos 8 caracteres.");
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      toast.error("A confirmação não confere com a nova senha.");
+      return;
+    }
+    if (!currentPassword) {
+      toast.error("Informe a senha atual.");
+      return;
+    }
+    setSavingPassword(true);
+    const { error } = await supabase.auth.updateUser({
+      password: newPassword,
+      current_password: currentPassword,
+    } as { password: string; current_password: string });
+    setSavingPassword(false);
+    if (error) {
+      toast.error("Não foi possível alterar a senha. Verifique a senha atual.");
+      return;
+    }
+    setCurrentPassword("");
+    setNewPassword("");
+    setConfirmPassword("");
+    toast.success("Senha alterada com sucesso.");
+  };
+
   const fields: { key: string; label: string }[] = [
     { key: "broker_name", label: "Nome do corretor" },
     { key: "creci", label: "CRECI" },
