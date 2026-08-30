@@ -171,6 +171,7 @@ function AdminHome() {
           <TabsTrigger value="properties">Imóveis</TabsTrigger>
           <TabsTrigger value="leads">E-mails capturados</TabsTrigger>
           <TabsTrigger value="settings">Configurações</TabsTrigger>
+          <TabsTrigger value="password">Senha</TabsTrigger>
         </TabsList>
 
         <TabsContent value="properties" className="mt-6 space-y-4">
