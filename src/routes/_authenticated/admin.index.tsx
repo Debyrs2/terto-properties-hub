@@ -112,6 +112,40 @@ function AdminHome() {
     navigate({ to: "/auth", replace: true });
   };
 
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [savingPassword, setSavingPassword] = useState(false);
+
+  const changePassword = async () => {
+    if (newPassword.length < 8) {
+      toast.error("A nova senha precisa ter pelo menos 8 caracteres.");
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      toast.error("A confirmação não confere com a nova senha.");
+      return;
+    }
+    if (!currentPassword) {
+      toast.error("Informe a senha atual.");
+      return;
+    }
+    setSavingPassword(true);
+    const { error } = await supabase.auth.updateUser({
+      password: newPassword,
+      current_password: currentPassword,
+    } as { password: string; current_password: string });
+    setSavingPassword(false);
+    if (error) {
+      toast.error("Não foi possível alterar a senha. Verifique a senha atual.");
+      return;
+    }
+    setCurrentPassword("");
+    setNewPassword("");
+    setConfirmPassword("");
+    toast.success("Senha alterada com sucesso.");
+  };
+
   const fields: { key: string; label: string }[] = [
     { key: "broker_name", label: "Nome do corretor" },
     { key: "creci", label: "CRECI" },
@@ -137,6 +171,7 @@ function AdminHome() {
           <TabsTrigger value="properties">Imóveis</TabsTrigger>
           <TabsTrigger value="leads">E-mails capturados</TabsTrigger>
           <TabsTrigger value="settings">Configurações</TabsTrigger>
+          <TabsTrigger value="password">Senha</TabsTrigger>
         </TabsList>
 
         <TabsContent value="properties" className="mt-6 space-y-4">
@@ -218,6 +253,46 @@ function AdminHome() {
             </div>
           ))}
           <Button onClick={saveSettings}>Salvar configurações</Button>
+        </TabsContent>
+
+        <TabsContent value="password" className="mt-6 max-w-md space-y-4">
+          <p className="text-muted-foreground text-sm">
+            Escolha uma senha com pelo menos 8 caracteres. Você continuará conectado após a
+            alteração.
+          </p>
+          <div className="space-y-2">
+            <Label htmlFor="current-password">Senha atual</Label>
+            <Input
+              id="current-password"
+              type="password"
+              autoComplete="current-password"
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="new-password">Nova senha</Label>
+            <Input
+              id="new-password"
+              type="password"
+              autoComplete="new-password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="confirm-password">Confirmar nova senha</Label>
+            <Input
+              id="confirm-password"
+              type="password"
+              autoComplete="new-password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </div>
+          <Button onClick={changePassword} disabled={savingPassword}>
+            Alterar senha
+          </Button>
         </TabsContent>
       </Tabs>
     </div>
