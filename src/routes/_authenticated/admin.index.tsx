@@ -254,6 +254,46 @@ function AdminHome() {
           ))}
           <Button onClick={saveSettings}>Salvar configurações</Button>
         </TabsContent>
+
+        <TabsContent value="password" className="mt-6 max-w-md space-y-4">
+          <p className="text-muted-foreground text-sm">
+            Escolha uma senha com pelo menos 8 caracteres. Você continuará conectado após a
+            alteração.
+          </p>
+          <div className="space-y-2">
+            <Label htmlFor="current-password">Senha atual</Label>
+            <Input
+              id="current-password"
+              type="password"
+              autoComplete="current-password"
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="new-password">Nova senha</Label>
+            <Input
+              id="new-password"
+              type="password"
+              autoComplete="new-password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="confirm-password">Confirmar nova senha</Label>
+            <Input
+              id="confirm-password"
+              type="password"
+              autoComplete="new-password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </div>
+          <Button onClick={changePassword} disabled={savingPassword}>
+            Alterar senha
+          </Button>
+        </TabsContent>
       </Tabs>
     </div>
   );
