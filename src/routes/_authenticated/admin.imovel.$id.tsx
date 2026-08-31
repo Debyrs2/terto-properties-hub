@@ -178,7 +178,36 @@ function AdminProperty() {
     queryClient.invalidateQueries({ queryKey: ["property", id] });
   };
 
+  const onUploadVideo = async (file: File | null, input: HTMLInputElement) => {
+    if (!file || isNew) return;
+    if (videos.length >= MAX_VIDEOS) {
+      toast.error(`Limite de ${MAX_VIDEOS} vídeos atingido.`);
+      return;
+    }
+    setUploadingVideo(true);
+    try {
+      const uploaded = await uploadVideo(id, file);
+      const { error } = await supabase.from("property_media").insert({
+        property_id: id,
+        kind: "video",
+        url: uploaded.url,
+        storage_path: uploaded.storage_path,
+        position: videos.length,
+      });
+      if (error) throw new Error(error.message);
+      toast.success("Vídeo enviado.");
+      input.value = "";
+      queryClient.invalidateQueries({ queryKey: ["admin", "media", id] });
+      queryClient.invalidateQueries({ queryKey: ["property", id] });
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Falha ao enviar o vídeo.");
+    } finally {
+      setUploadingVideo(false);
+    }
+  };
+
   const addVideo = async () => {
+
     if (!videoUrl.trim() || isNew) return;
     if (videos.length >= MAX_VIDEOS) {
       toast.error(`Limite de ${MAX_VIDEOS} vídeos atingido.`);
