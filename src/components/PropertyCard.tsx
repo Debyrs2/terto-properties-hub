@@ -69,22 +69,22 @@ function CardCarousel({ photos, alt }: { photos: { id: string; url: string }[]; 
             <ChevronRight className="h-4 w-4" />
           </button>
           <div className="absolute bottom-2 left-1/2 z-20 flex -translate-x-1/2 items-center gap-1.5 rounded-full bg-black/35 px-2 py-1 backdrop-blur">
-            {photos.slice(0, 8).map((photo, index) => (
-              <span
-                key={photo.id}
-                className={`block h-1.5 rounded-full transition-all ${
-                  index === selected % 8 && index === selected
-                    ? "w-4 bg-white"
-                    : "w-1.5 bg-white/50"
-                }`}
-              />
-            ))}
-            {photos.length > 8 && (
-              <span className="ml-1 text-[10px] leading-none text-white/90">
+            {photos.length <= 8 ? (
+              photos.map((photo, index) => (
+                <span
+                  key={photo.id}
+                  className={`block h-1.5 rounded-full transition-all ${
+                    index === selected ? "w-4 bg-white" : "w-1.5 bg-white/50"
+                  }`}
+                />
+              ))
+            ) : (
+              <span className="text-[10px] leading-none text-white/90">
                 {selected + 1}/{photos.length}
               </span>
             )}
           </div>
+
         </>
       )}
     </>
