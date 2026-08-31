@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { ArrowLeft, Trash2 } from "lucide-react";
+import { ArrowLeft, Loader2, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
-import { removeStorageFile, uploadPhoto } from "@/lib/admin-media";
+import { removeStorageFile, uploadPhoto, uploadVideo } from "@/lib/admin-media";
 import { MAX_PHOTOS, MAX_VIDEOS, type Media } from "@/lib/property";
 
 export const Route = createFileRoute("/_authenticated/admin/imovel/$id")({
@@ -57,6 +57,7 @@ function AdminProperty() {
   const [form, setForm] = useState<FormState>(empty);
   const [videoUrl, setVideoUrl] = useState("");
   const [busy, setBusy] = useState(false);
+  const [uploadingVideo, setUploadingVideo] = useState(false);
 
   const property = useQuery({
     queryKey: ["admin", "property", id],
@@ -178,7 +179,36 @@ function AdminProperty() {
     queryClient.invalidateQueries({ queryKey: ["property", id] });
   };
 
+  const onUploadVideo = async (file: File | null, input: HTMLInputElement) => {
+    if (!file || isNew) return;
+    if (videos.length >= MAX_VIDEOS) {
+      toast.error(`Limite de ${MAX_VIDEOS} vídeos atingido.`);
+      return;
+    }
+    setUploadingVideo(true);
+    try {
+      const uploaded = await uploadVideo(id, file);
+      const { error } = await supabase.from("property_media").insert({
+        property_id: id,
+        kind: "video",
+        url: uploaded.url,
+        storage_path: uploaded.storage_path,
+        position: videos.length,
+      });
+      if (error) throw new Error(error.message);
+      toast.success("Vídeo enviado.");
+      input.value = "";
+      queryClient.invalidateQueries({ queryKey: ["admin", "media", id] });
+      queryClient.invalidateQueries({ queryKey: ["property", id] });
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Falha ao enviar o vídeo.");
+    } finally {
+      setUploadingVideo(false);
+    }
+  };
+
   const addVideo = async () => {
+
     if (!videoUrl.trim() || isNew) return;
     if (videos.length >= MAX_VIDEOS) {
       toast.error(`Limite de ${MAX_VIDEOS} vídeos atingido.`);
@@ -345,9 +375,28 @@ function AdminProperty() {
                 onChange={(e) => setVideoUrl(e.target.value)}
               />
               <Button onClick={addVideo} className="shrink-0">
-                Adicionar
+                Adicionar link
               </Button>
             </div>
+            <div className="space-y-2 rounded-lg border p-3">
+              <Label htmlFor="videofile" className="text-sm">
+                Ou enviar arquivo de vídeo (MP4, MOV ou WEBM — até 200 MB)
+              </Label>
+              <Input
+                id="videofile"
+                type="file"
+                accept="video/mp4,video/quicktime,video/webm,.mp4,.mov,.webm"
+                disabled={uploadingVideo || videos.length >= MAX_VIDEOS}
+                onChange={(e) => onUploadVideo(e.target.files?.[0] ?? null, e.currentTarget)}
+              />
+              {uploadingVideo && (
+                <p className="text-muted-foreground flex items-center gap-2 text-sm">
+                  <Loader2 className="h-4 w-4 animate-spin" /> Enviando vídeo… isso pode levar
+                  alguns minutos.
+                </p>
+              )}
+            </div>
+
             <ul className="divide-y rounded-lg border">
               {videos.map((video) => (
                 <li
