@@ -39,7 +39,7 @@ export function PropertyVideo({ video, title }: { video: Media; title: string })
     }
     return (
       <iframe
-        src={`https://www.youtube.com/embed/${ytId}?autoplay=1`}
+        src={`https://www.youtube.com/embed/${ytId}?autoplay=1&mute=1`}
         title={title}
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture"
         allowFullScreen
@@ -50,8 +50,13 @@ export function PropertyVideo({ video, title }: { video: Media; title: string })
 
   return (
     <video
+      key={video.url}
+      ref={(el) => {
+        if (el) el.muted = true;
+      }}
       src={video.url}
       controls
+      muted
       preload="none"
       playsInline
       className="bg-muted aspect-video w-full rounded-lg object-cover"

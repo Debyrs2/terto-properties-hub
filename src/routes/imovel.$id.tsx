@@ -113,15 +113,16 @@ function PropertyPage() {
         </header>
 
         {photos.length > 0 && (
-          <section className="mt-10">
+          <section className="mx-auto mt-10 w-full md:max-w-[88%] lg:max-w-[80%]">
             <PropertyGallery photos={photos} title={title} />
           </section>
         )}
 
         {videos.length > 0 && (
-          <section className="mt-12 space-y-4">
+          <section className="mx-auto mt-12 w-full space-y-4 md:max-w-[88%] lg:max-w-[80%]">
             <h2 className="text-xs tracking-[0.3em] uppercase">{t("prop.videos")}</h2>
             <div className="grid gap-6 [grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr))]">
+
               {videos.map((video) => (
                 <PropertyVideo key={video.id} video={video} title={title} />
               ))}
