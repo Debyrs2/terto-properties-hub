@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { ArrowLeft, Trash2 } from "lucide-react";
+import { ArrowLeft, Loader2, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
-import { removeStorageFile, uploadPhoto } from "@/lib/admin-media";
+import { removeStorageFile, uploadPhoto, uploadVideo } from "@/lib/admin-media";
 import { MAX_PHOTOS, MAX_VIDEOS, type Media } from "@/lib/property";
 
 export const Route = createFileRoute("/_authenticated/admin/imovel/$id")({
@@ -57,6 +57,7 @@ function AdminProperty() {
   const [form, setForm] = useState<FormState>(empty);
   const [videoUrl, setVideoUrl] = useState("");
   const [busy, setBusy] = useState(false);
+  const [uploadingVideo, setUploadingVideo] = useState(false);
 
   const property = useQuery({
     queryKey: ["admin", "property", id],
