@@ -55,7 +55,7 @@ export function LeadCapture() {
     <div
       role="dialog"
       aria-label={t("lead.title")}
-      className="animate-in fade-in slide-in-from-bottom-4 bg-card fixed right-4 bottom-4 z-50 w-[min(22rem,calc(100vw-2rem))] rounded-lg border p-5 shadow-lg duration-500"
+      className="animate-in fade-in slide-in-from-bottom-4 bg-card fixed bottom-4 left-4 z-50 w-[min(22rem,calc(100vw-2rem))] rounded-lg border p-5 shadow-lg duration-500"
     >
       <button
         type="button"

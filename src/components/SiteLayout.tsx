@@ -1,6 +1,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import type { ReactNode } from "react";
 
+import { BrokerWidget } from "@/components/BrokerWidget";
 import { LeadCapture } from "@/components/LeadCapture";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -16,6 +17,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
       <main className="flex-1">{children}</main>
       <SiteFooter settings={settings} />
       <LeadCapture />
+      <BrokerWidget whatsapp={settings?.whatsapp_primary} />
     </div>
   );
 }
