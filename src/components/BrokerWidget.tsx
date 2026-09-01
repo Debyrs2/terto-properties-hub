@@ -14,7 +14,7 @@ const labels = {
   es: { cta: "¡Habla conmigo!", close: "Cerrar", alt: "Foto del corredor Fernando Terto" },
 } as const;
 
-export function BrokerWidget({ whatsapp }: { whatsapp?: string | null }) {
+export function BrokerWidget({ whatsapp }: { whatsapp: string | null | undefined }) {
   const { lang } = useI18n();
   const [visible, setVisible] = useState(false);
   const l = labels[lang] ?? labels.pt;
