@@ -53,7 +53,7 @@ export function BrokerWidget({ whatsapp }: { whatsapp: string | null | undefined
           className="border-accent/40 bg-card block h-16 w-16 overflow-hidden rounded-full border-2 shadow-lg sm:h-20 sm:w-20"
         >
           <img
-            src={brokerPhoto.url}
+            src={brokerPhoto}
             alt={l.alt}
             loading="lazy"
             className="h-full w-full scale-110 object-cover object-top"
