@@ -1,7 +1,7 @@
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 
-import brokerPhoto from "@/assets/fernando-terto.png.asset.json";
+import brokerPhoto from "@/assets/fernando-terto.png";
 import { useI18n } from "@/lib/i18n";
 import { whatsappLink } from "@/lib/whatsapp";
 
