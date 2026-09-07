@@ -2,10 +2,11 @@ import { createServerFn } from "@tanstack/react-start";
 import { createClient } from "@supabase/supabase-js";
 
 import type { Media, Property, PropertyWithMedia, SiteSettings } from "./property";
+import { getSupabasePublishableKey, getSupabaseUrl } from "./supabase-env";
 
 function publicClient() {
-  const key = process.env["SUPABASE_PUBLISHABLE_KEY"]!;
-  const url = process.env["SUPABASE_URL"]!;
+  const key = getSupabasePublishableKey();
+  const url = getSupabaseUrl();
   return createClient(url, key, {
     auth: { persistSession: false, autoRefreshToken: false },
     global: {
