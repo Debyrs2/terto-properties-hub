@@ -17,7 +17,9 @@ export function SiteFooter({ settings }: { settings: SiteSettings | null }) {
         <div className="space-y-4">
           <Logo />
           <p className="text-muted-foreground max-w-xs text-sm">
-            {settings?.broker_name ?? "Fernando Terto"} — {t("hero.eyebrow")}
+            {settings?.broker_name ?? "Fernando Terto"}
+            <br />
+            {t("hero.eyebrow")}
           </p>
         </div>
 
