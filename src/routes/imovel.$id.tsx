@@ -92,7 +92,9 @@ function PropertyPage() {
               {title}
             </h1>
             {property.address && (
-              <p className="text-muted-foreground max-w-3xl text-base">{property.address}</p>
+              <p className="text-muted-foreground max-w-3xl text-base">
+                {property.address.replaceAll(" — ", ", ")}
+              </p>
             )}
           </div>
 
@@ -163,7 +165,9 @@ function PropertyPage() {
             <section className="bg-card space-y-3 rounded-lg border p-6">
               <h2 className="text-xs tracking-[0.3em] uppercase">{t("prop.address")}</h2>
               {property.address && (
-                <p className="text-muted-foreground leading-relaxed">{property.address}</p>
+                <p className="text-muted-foreground leading-relaxed">
+                  {property.address.replaceAll(" — ", ", ")}
+                </p>
               )}
               {property.maps_url && (
                 <Button asChild variant="outline" size="sm">
